@@ -22,46 +22,54 @@ namespace JordanInsider.Infra.Repository
 
         public List<Event> GetAllEvents()
         {
-            IEnumerable<Event> result = dbContext.Connection.Query<Event>("Event_Package.GetAllEvents", commandType: CommandType.StoredProcedure);
+            IEnumerable<Event> result = dbContext.Connection.Query<Event>("event_package.GetAllEvents", commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
 
-        public Event GetEventById(decimal id)
+        public Event GetEventById(decimal eventId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Query<Event>("Event_Package_SPEC.GetEventById", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_eventId", eventId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Event>("event_package.GetEventById", p, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
 
         public void CreateEvent(Event eventData)
         {
             var p = new DynamicParameters();
-            p.Add("DATESTART", eventData.Datestart, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-            p.Add("DETAILS", eventData.Details, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("IMAGE1", eventData.Image1, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("IMAGE2", eventData.Image2, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("VALIDITY", eventData.Validity, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Event_Package_SPEC.CreateEvent", p, commandType: CommandType.StoredProcedure);
+            p.Add("name", eventData.Name, DbType.String, ParameterDirection.Input);
+
+            p.Add("start_date", eventData.Datestart, DbType.String, ParameterDirection.Input);
+            p.Add("event_details", eventData.Details, DbType.String, ParameterDirection.Input);
+            p.Add("img1", eventData.Image1, DbType.String, ParameterDirection.Input);
+            p.Add("img2", eventData.Image2, DbType.String, ParameterDirection.Input);
+            p.Add("location", eventData.location, DbType.String, ParameterDirection.Input);
+
+            p.Add("valid_until", eventData.Validity, DbType.String, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("event_package.CreateEvent", p, commandType: CommandType.StoredProcedure);
         }
 
         public void UpdateEvent(Event eventData)
         {
             var p = new DynamicParameters();
-            p.Add("ID", eventData.Eventid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("DATESTART", eventData.Datestart, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-            p.Add("DETAILS", eventData.Details, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("IMAGE1", eventData.Image1, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("IMAGE2", eventData.Image2, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("VALIDITY", eventData.Validity, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Event_Package_SPEC.UpdateEvent", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_eId", eventData.Eventid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_name", eventData.Name, DbType.String, ParameterDirection.Input);
+            p.Add("p_location", eventData.location, DbType.String, ParameterDirection.Input);
+
+            p.Add("p_start_date", eventData.Datestart, DbType.String, ParameterDirection.Input);
+            p.Add("p_event_details", eventData.Details, DbType.String, ParameterDirection.Input);
+            p.Add("p_img1", eventData.Image1, DbType.String, ParameterDirection.Input);
+            p.Add("p_img2", eventData.Image2, DbType.String, ParameterDirection.Input);
+            p.Add("p_valid_until", eventData.Validity, DbType.String, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("event_package.UpdateEvent", p, commandType: CommandType.StoredProcedure);
         }
 
-        public void DeleteEvent(decimal id)
+        public void DeleteEvent(decimal eventId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Event_Package_SPEC.DeleteEvent", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_eventId", eventId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("event_package.DeleteEvent", p, commandType: CommandType.StoredProcedure);
         }
+
     }
 }

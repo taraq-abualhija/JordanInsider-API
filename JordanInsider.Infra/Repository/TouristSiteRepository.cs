@@ -45,6 +45,8 @@ namespace JordanInsider.Infra.Repository
             p.Add("IMAGE4", touristSiteData.Image4, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("status", touristSiteData.status, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("location", touristSiteData.location, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("tfrom", touristSiteData.tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("tto", touristSiteData.tto, dbType: DbType.String, direction: ParameterDirection.Input);
 
             var result = dbContext.Connection.Execute("TouristSite_Package.CreateTouristSite", p, commandType: CommandType.StoredProcedure);
         }
@@ -61,6 +63,8 @@ namespace JordanInsider.Infra.Repository
             p.Add("p_image4", touristSiteData.Image4, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_status", touristSiteData.status, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_location", touristSiteData.location, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_tfrom", touristSiteData.tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_tto", touristSiteData.tto, dbType: DbType.String, direction: ParameterDirection.Input);
 
             var result = dbContext.Connection.Execute("TouristSite_Package.UpdateTouristSite", p, commandType: CommandType.StoredProcedure);
         }

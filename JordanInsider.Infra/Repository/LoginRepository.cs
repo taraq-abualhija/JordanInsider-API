@@ -25,7 +25,7 @@ namespace JordanInsider.Infra.Repository
             var p = new DynamicParameters();
             p.Add("User_NAME", user.Email, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("PASS", user.Password, dbType: DbType.String, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Query<User>("User_Package.User_Login", p, commandType: CommandType.StoredProcedure);
+            var result = dbContext.Connection.Query<User>("Login_Package.User_Login", p, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
     }

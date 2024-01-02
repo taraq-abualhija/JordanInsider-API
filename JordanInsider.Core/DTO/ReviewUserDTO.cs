@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace JordanInsider.Core.DTO
 {
-    public class UserDTO
+    public class ReviewUserDTO
     {
-
-        public string? Username { get; set; }
-        public string? Rolename { get; set; }
+        public string? Name { get; set; }
+        public string? Imagename { get; set; }
         public decimal? Rating { get; set; }
         public string? Reviewtxt { get; set; }
         public DateTime? Reviewdate { get; set; }
+
 
     }
 }

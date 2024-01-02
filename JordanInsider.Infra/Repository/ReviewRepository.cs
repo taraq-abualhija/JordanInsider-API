@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using JordanInsider.Core.Common;
+using JordanInsider.Core.DTO;
 using JordanInsider.Core.Models;
 using JordanInsider.Core.Repository;
 using System;
@@ -22,45 +23,69 @@ namespace JordanInsider.Infra.Repository
 
         public List<Review> GetAllReviews()
         {
-            IEnumerable<Review> result = dbContext.Connection.Query<Review>("Review_Package.GetAllReviews", commandType: CommandType.StoredProcedure);
+            IEnumerable<Review> result = dbContext.Connection.Query<Review>("review_package.GetAllReviews", commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
 
-        public Review GetReviewById(decimal id)
+        public Review GetReviewById(decimal reviewId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Query<Review>("Review_Package_SPEC.GetReviewById", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_reviewId", reviewId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Review>("review_package.GetReviewById", p, commandType: CommandType.StoredProcedure);
+            return result.FirstOrDefault();
+        }
+      
+
+        public List<ReviewUserDTO> GetReviewsByTouristSiteId(decimal touristSiteId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_touristSiteId", touristSiteId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<ReviewUserDTO>("review_package.GetReviewsByTouristSiteId", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
+        public List<Review> GetReviewsByUserId(decimal userId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_userId", userId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Review>("review_package.GetReviewsByUserId", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
+        public Review GetReviewByUserId(decimal userId, decimal touristSiteId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_touristSiteId", touristSiteId, DbType.Int32, ParameterDirection.Input);
+
+            p.Add("p_userId", userId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Review>("review_package.GetReviewByUserId", p, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
 
         public void CreateReview(Review reviewData)
         {
             var p = new DynamicParameters();
-            p.Add("TOURISTSITEID", reviewData.Touristsiteid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("USERID", reviewData.Userid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("RATING", reviewData.Rating, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("REVIEWTXT", reviewData.Reviewtxt, dbType: DbType.String, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Review_Package_SPEC.CreateReview", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_touristSiteId", reviewData.Touristsiteid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_userId", reviewData.Userid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_rating", reviewData.Rating, DbType.Decimal, ParameterDirection.Input);
+            p.Add("p_reviewText", reviewData.Reviewtxt, DbType.String, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("review_package.CreateReview", p, commandType: CommandType.StoredProcedure);
         }
 
         public void UpdateReview(Review reviewData)
         {
             var p = new DynamicParameters();
-            p.Add("ID", reviewData.Reviewid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("TOURISTSITEID", reviewData.Touristsiteid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("USERID", reviewData.Userid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("RATING", reviewData.Rating, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("REVIEWTXT", reviewData.Reviewtxt, dbType: DbType.String, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Review_Package_SPEC.UpdateReview", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_reviewId", reviewData.Reviewid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_rating", reviewData.Rating, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_reviewText", reviewData.Reviewtxt, DbType.String, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("review_package.UpdateReview", p, commandType: CommandType.StoredProcedure);
         }
 
-        public void DeleteReview(decimal id)
+        public void DeleteReview(decimal reviewId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Review_Package_SPEC.DeleteReview", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_reviewId", reviewId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("review_package.DeleteReview", p, commandType: CommandType.StoredProcedure);
         }
     }
-
 }

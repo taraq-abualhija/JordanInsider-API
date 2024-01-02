@@ -21,6 +21,8 @@ namespace JordanInsider.Core.Models
         public string? Image4 { get; set; }
         public string? status { get; set; }
         public string? location { get; set; }
+        public string? tfrom { get; set; }
+        public string? tto { get; set; }
 
 
         public virtual ICollection<Review> Reviews { get; set; }

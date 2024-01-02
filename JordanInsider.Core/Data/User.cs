@@ -13,6 +13,8 @@ namespace JordanInsider.Core.Models
 
         public decimal Userid { get; set; }
         public string? Name { get; set; }
+        public string? Imagename { get; set; }
+
         public string? Password { get; set; }
         public string? Email { get; set; }
         public string? Phonenum { get; set; }

@@ -10,6 +10,7 @@ namespace JordanInsider.Core.Models
         public decimal? Userid { get; set; }
         public decimal? Rating { get; set; }
         public string? Reviewtxt { get; set; }
+        public DateTime? Reviewdate { get; set; }
 
         public virtual Touristsite? Touristsite { get; set; }
         public virtual User? User { get; set; }

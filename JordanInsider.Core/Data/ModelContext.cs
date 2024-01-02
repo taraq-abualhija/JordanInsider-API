@@ -47,13 +47,22 @@ namespace JordanInsider.Core.Models
                     .HasColumnName("EVENTID");
 
                 entity.Property(e => e.Datestart)
-                    .HasColumnType("DATE")
-                    .HasColumnName("DATESTART");
+  .HasMaxLength(50)
+                    .IsUnicode(false).HasColumnName("DATESTART");
 
                 entity.Property(e => e.Details)
                     .HasMaxLength(1000)
                     .IsUnicode(false)
                     .HasColumnName("DETAILS");
+                entity.Property(e => e.location)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("LOCATION");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("IMAGE1"); 
 
                 entity.Property(e => e.Image1)
                     .HasMaxLength(1000)
@@ -66,7 +75,8 @@ namespace JordanInsider.Core.Models
                     .HasColumnName("IMAGE2");
 
                 entity.Property(e => e.Validity)
-                    .HasColumnType("DATE")
+                      .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("VALIDITY");
             });
 
@@ -87,6 +97,9 @@ namespace JordanInsider.Core.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("REVIEWTXT");
+                entity.Property(e => e.Reviewdate)
+                    .HasColumnType("DATE")
+                   .HasColumnName("REVIEWDATE");
 
                 entity.Property(e => e.Touristsiteid)
                     .HasColumnType("NUMBER(38)")
@@ -201,10 +214,16 @@ namespace JordanInsider.Core.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("STATUS");
-            entity.Property(e => e.location)
-                   .HasMaxLength(100)
-                   .IsUnicode(false)
-                   .HasColumnName("location");
+                entity.Property(e => e.location)
+                       .HasMaxLength(100)
+                       .IsUnicode(false)
+                       .HasColumnName("location");
+                entity.Property(e => e.tfrom)
+  .HasMaxLength(50)
+                       .IsUnicode(false).HasColumnName("TFROM");
+                entity.Property(e => e.tto)
+  .HasMaxLength(50)
+                       .IsUnicode(false).HasColumnName("TTO");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -229,6 +248,10 @@ namespace JordanInsider.Core.Models
             .HasMaxLength(50)
             .IsUnicode(false)
             .HasColumnName("PASSWORD");
+                entity.Property(e => e.Imagename)
+            .HasMaxLength(1000)
+            .IsUnicode(false)
+            .HasColumnName("IMAGENAME");
 
                 entity.Property(e => e.Phonenum)
                     .HasMaxLength(50)

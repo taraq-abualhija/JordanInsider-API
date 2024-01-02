@@ -1,11 +1,9 @@
-﻿using JordanInsider.Core.Models;
+﻿using JordanInsider.Core.DTO;
+using JordanInsider.Core.Models;
 using JordanInsider.Core.Repository;
 using JordanInsider.Core.Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JordanInsider.Infra.Service
 {
@@ -23,24 +21,46 @@ namespace JordanInsider.Infra.Service
             return _reviewRepository.GetAllReviews();
         }
 
-        public Review GetReviewById(decimal id)
+        public Review GetReviewById(decimal reviewId)
         {
-            return _reviewRepository.GetReviewById(id);
+            return _reviewRepository.GetReviewById(reviewId);
         }
 
+        public List<ReviewUserDTO> GetReviewsByTouristSiteId(decimal touristSiteId)
+        {
+            return _reviewRepository.GetReviewsByTouristSiteId(touristSiteId);
+        }
+        public List<Review> GetReviewsByUserId(decimal userId)
+        {
+            return _reviewRepository.GetReviewsByUserId(userId);
+        }
+        public Review GetReviewByUserId(decimal userId, decimal touristSiteId)
+        {
+            return _reviewRepository.GetReviewByUserId(userId, touristSiteId);
+        }
         public void CreateReview(Review reviewData)
         {
+            if (reviewData == null)
+            {
+                throw new ArgumentNullException(nameof(reviewData));
+            }
+
             _reviewRepository.CreateReview(reviewData);
         }
 
         public void UpdateReview(Review reviewData)
         {
+            if (reviewData == null)
+            {
+                throw new ArgumentNullException(nameof(reviewData));
+            }
+
             _reviewRepository.UpdateReview(reviewData);
         }
 
-        public void DeleteReview(decimal id)
+        public void DeleteReview(decimal reviewId)
         {
-            _reviewRepository.DeleteReview(id);
+            _reviewRepository.DeleteReview(reviewId);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace JordanInsider.API.Controllers
             }
             else
             {
-                return Unauthorized();
+                return StatusCode(200, "Unauthorized");
             }
 
 

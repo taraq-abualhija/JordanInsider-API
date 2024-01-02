@@ -1,18 +1,19 @@
-﻿using JordanInsider.Core.Models;
+﻿using JordanInsider.Core.DTO;
+using JordanInsider.Core.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JordanInsider.Core.Repository
 {
     public interface IReviewRepository
     {
         List<Review> GetAllReviews();
-        Review GetReviewById(decimal id);
+        Review GetReviewById(decimal reviewId);
+        List<ReviewUserDTO> GetReviewsByTouristSiteId(decimal touristSiteId);
+        public List<Review> GetReviewsByUserId(decimal userId);
+        public Review GetReviewByUserId(decimal userId, decimal touristSiteId);
         void CreateReview(Review reviewData);
         void UpdateReview(Review reviewData);
-        void DeleteReview(decimal id);
+        void DeleteReview(decimal reviewId);
     }
 }

@@ -56,8 +56,8 @@ namespace LearningHub.API.Controllers
             touristSiteService.DeleteTouristSite(id);
             return Ok();
         }
-        [HttpDelete]
-        [Route("DeleteTouristSite/{id}")]
+        [HttpPut]
+        [Route("AcceptTouristSite/{id}")]
         public IActionResult AcceptTouristSite(int id)
         {
             touristSiteService.AcceptTouristSite(id);
