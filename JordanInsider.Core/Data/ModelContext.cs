@@ -89,18 +89,6 @@ namespace JordanInsider.Core.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("REVIEWID");
 
-                entity.Property(e => e.Rating)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("RATING");
-
-                entity.Property(e => e.Reviewtxt)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("REVIEWTXT");
-                entity.Property(e => e.Reviewdate)
-                    .HasColumnType("DATE")
-                   .HasColumnName("REVIEWDATE");
-
                 entity.Property(e => e.Touristsiteid)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("TOURISTSITEID");
