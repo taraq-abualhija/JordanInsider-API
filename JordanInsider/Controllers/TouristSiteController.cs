@@ -17,51 +17,110 @@ namespace LearningHub.API.Controllers
         {
             this.touristSiteService = touristSiteService;
         }
-
         [HttpGet]
         [Route("GetAllTouristSites")]
-        public List<Touristsite> GetAllTouristSites()
+        public IActionResult GetAllTouristSites()
         {
-            return touristSiteService.GetAllTouristSites();
+            try
+            {
+                var result = touristSiteService.GetAllTouristSites();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while fetching all tourist sites: " + ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("GetTouristSiteById/{id}")]
-        public Touristsite GetTouristSiteById(int id)
+        public IActionResult GetTouristSiteById(int id)
         {
-            return touristSiteService.GetTouristSiteById(id);
+            try
+            {
+                var result = touristSiteService.GetTouristSiteById(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while fetching tourist site by ID: " + ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("CreateTouristSite")]
         public IActionResult CreateTouristSite(Touristsite touristSite)
         {
-            touristSite.status = "pending";
-            touristSiteService.CreateTouristSite(touristSite);
-            return StatusCode(StatusCodes.Status201Created);
+            try
+            {
+                touristSite.Status = "pending";
+                touristSiteService.CreateTouristSite(touristSite);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while creating a tourist site: " + ex.Message);
+            }
         }
 
         [HttpPut]
         [Route("UpdateTouristSite")]
         public IActionResult UpdateTouristSite(Touristsite touristSite)
         {
-            touristSiteService.UpdateTouristSite(touristSite);
-            return Ok();
+            try
+            {
+                touristSiteService.UpdateTouristSite(touristSite);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating a tourist site: " + ex.Message);
+            }
         }
 
         [HttpDelete]
         [Route("DeleteTouristSite/{id}")]
         public IActionResult DeleteTouristSite(int id)
         {
-            touristSiteService.DeleteTouristSite(id);
-            return Ok();
+            try
+            {
+                touristSiteService.DeleteTouristSite(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting a tourist site: " + ex.Message);
+            }
         }
+
         [HttpPut]
         [Route("AcceptTouristSite/{id}")]
         public IActionResult AcceptTouristSite(int id)
         {
-            touristSiteService.AcceptTouristSite(id);
-            return Ok();
+            try
+            {
+                touristSiteService.AcceptTouristSite(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while accepting a tourist site: " + ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("SearchTouristSiteByName/{name}")]
+        public IActionResult SearchTouristSiteByName(string name)
+        {
+            try
+            {
+                var result = touristSiteService.SearchTouristSiteByName(name);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while searching for tourist sites by name: " + ex.Message);
+            }
         }
         [Route("uploadImage")]
         [HttpPost]
@@ -88,7 +147,7 @@ namespace LearningHub.API.Controllers
                 Touristsite item = new Touristsite();
                 item.SetImages(images);
 
-                return Ok(item); // Assuming everything is successful, return 200 OK with the item
+                return Ok(item); 
             }
             catch (Exception ex)
             {

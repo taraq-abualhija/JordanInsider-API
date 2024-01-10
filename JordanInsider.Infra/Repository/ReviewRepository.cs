@@ -76,7 +76,7 @@ namespace JordanInsider.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("p_reviewId", reviewData.Reviewid, DbType.Int32, ParameterDirection.Input);
-            p.Add("p_rating", reviewData.Rating, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_rating", reviewData.Rating, DbType.Decimal, ParameterDirection.Input);
             p.Add("p_reviewText", reviewData.Reviewtxt, DbType.String, ParameterDirection.Input);
             var result = dbContext.Connection.Execute("review_package.UpdateReview", p, commandType: CommandType.StoredProcedure);
         }

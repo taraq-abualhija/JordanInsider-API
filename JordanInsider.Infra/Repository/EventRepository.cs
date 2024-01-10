@@ -38,12 +38,13 @@ namespace JordanInsider.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("name", eventData.Name, DbType.String, ParameterDirection.Input);
+          //  p.Add("p_coordinatorId", eventData.Coordinatorid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
 
             p.Add("start_date", eventData.Datestart, DbType.String, ParameterDirection.Input);
             p.Add("event_details", eventData.Details, DbType.String, ParameterDirection.Input);
             p.Add("img1", eventData.Image1, DbType.String, ParameterDirection.Input);
             p.Add("img2", eventData.Image2, DbType.String, ParameterDirection.Input);
-            p.Add("location", eventData.location, DbType.String, ParameterDirection.Input);
+            p.Add("location", eventData.Location, DbType.String, ParameterDirection.Input);
 
             p.Add("valid_until", eventData.Validity, DbType.String, ParameterDirection.Input);
             var result = dbContext.Connection.Execute("event_package.CreateEvent", p, commandType: CommandType.StoredProcedure);
@@ -53,8 +54,10 @@ namespace JordanInsider.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("p_eId", eventData.Eventid, DbType.Int32, ParameterDirection.Input);
+           // p.Add("p_coordinatorId", eventData.Coordinatorid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+
             p.Add("p_name", eventData.Name, DbType.String, ParameterDirection.Input);
-            p.Add("p_location", eventData.location, DbType.String, ParameterDirection.Input);
+            p.Add("p_location", eventData.Location, DbType.String, ParameterDirection.Input);
 
             p.Add("p_start_date", eventData.Datestart, DbType.String, ParameterDirection.Input);
             p.Add("p_event_details", eventData.Details, DbType.String, ParameterDirection.Input);

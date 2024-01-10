@@ -20,7 +20,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\JordanInsider.Infra\JordanInsider.Infra.csproj" />
-  </ItemGroup>
+		<ProjectReference Include="..\JordanInsider.Core\JordanInsider.Core.csproj" />
+
+		<ProjectReference Include="..\JordanInsider.Infra\JordanInsider.Infra.csproj" />
+
+	</ItemGroup>
 
 </Project>

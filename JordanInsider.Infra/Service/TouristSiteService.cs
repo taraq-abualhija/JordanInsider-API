@@ -46,5 +46,12 @@ namespace JordanInsider.Infra.Service
         {
             _touristSiteRepository.AcceptTouristSite(id);
         }
+        public List<Touristsite> SearchTouristSiteByName(string name)
+        {
+
+           return _touristSiteRepository.SearchTouristSiteByName (name);
+
+        }
+
     }
 }

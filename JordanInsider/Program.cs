@@ -7,8 +7,12 @@ using JordanInsider.Infra.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using JordanInsider.API.Settings;
+using System.Configuration;
+using JordanInsider.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -21,13 +25,17 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
 
 builder.Services.AddScoped<ITouristSiteService, TouristSiteService>();
 
 builder.Services.AddScoped<IEventService,EventService>();
 builder.Services.AddScoped<ILoginService,LoginService>();
+builder.Services.AddScoped<IEmailService,EmailService>();
+builder.Services.Configure<EmailConfiguration>(configuration.GetSection("EmailConfiguration"));
 
 builder.Services.AddAuthentication(opt => {
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

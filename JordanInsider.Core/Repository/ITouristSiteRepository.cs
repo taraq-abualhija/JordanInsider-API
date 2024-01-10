@@ -15,5 +15,7 @@ namespace JordanInsider.Core.Repository
         void UpdateTouristSite(Touristsite touristSiteData);
         void DeleteTouristSite(decimal id);
         public void AcceptTouristSite(decimal id);
+        public List<Touristsite> SearchTouristSiteByName(string name);
+
     }
 }

@@ -38,15 +38,17 @@ namespace JordanInsider.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("NAME", touristSiteData.Name, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_coordinatorId", touristSiteData.Coordinatorid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+
             p.Add("DESCRIPTION", touristSiteData.Description, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("IMAGE1", touristSiteData.Image1, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("IMAGE2", touristSiteData.Image2, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("IMAGE3", touristSiteData.Image3, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("IMAGE4", touristSiteData.Image4, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("status", touristSiteData.status, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("location", touristSiteData.location, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("tfrom", touristSiteData.tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("tto", touristSiteData.tto, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("status", touristSiteData.Status, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("location", touristSiteData.Location, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("tfrom", touristSiteData.Tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("tto", touristSiteData.Tto, dbType: DbType.String, direction: ParameterDirection.Input);
 
             var result = dbContext.Connection.Execute("TouristSite_Package.CreateTouristSite", p, commandType: CommandType.StoredProcedure);
         }
@@ -55,16 +57,17 @@ namespace JordanInsider.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("p_touristSiteId", touristSiteData.Touristsiteid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            p.Add("p_coordinatorId", touristSiteData.Coordinatorid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
             p.Add("p_name", touristSiteData.Name, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_description", touristSiteData.Description, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_image1", touristSiteData.Image1, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_image2", touristSiteData.Image2, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_image3", touristSiteData.Image3, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("p_image4", touristSiteData.Image4, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("p_status", touristSiteData.status, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("p_location", touristSiteData.location, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("p_tfrom", touristSiteData.tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("p_tto", touristSiteData.tto, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_status", touristSiteData.Status, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_location", touristSiteData.Location, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_tfrom", touristSiteData.Tfrom, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("p_tto", touristSiteData.Tto, dbType: DbType.String, direction: ParameterDirection.Input);
 
             var result = dbContext.Connection.Execute("TouristSite_Package.UpdateTouristSite", p, commandType: CommandType.StoredProcedure);
         }
@@ -82,6 +85,12 @@ namespace JordanInsider.Infra.Repository
             p.Add("touristSiteId1", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
             var result = dbContext.Connection.Execute("TouristSite_Package.AcceptTouristSite", p, commandType: CommandType.StoredProcedure);
         }
-
+        public List<Touristsite> SearchTouristSiteByName(string name)
+        {
+            var p = new DynamicParameters();
+            p.Add("search_name", name, dbType: DbType.String, direction: ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Touristsite>("TouristSite_Package.SearchTouristSiteByName", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
     }
 }
