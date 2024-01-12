@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JordanInsider.Infra.Repository
 {
@@ -22,42 +20,65 @@ namespace JordanInsider.Infra.Repository
 
         public List<Ticket> GetAllTickets()
         {
-            IEnumerable<Ticket> result = dbContext.Connection.Query<Ticket>("Ticket_Package.GetAllTickets", commandType: CommandType.StoredProcedure);
+            IEnumerable<Ticket> result = dbContext.Connection.Query<Ticket>("ticket_package.GetAllTickets", commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
 
-        public Ticket GetTicketById(decimal id)
+        public Ticket GetTicketById(decimal ticketId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Query<Ticket>("Ticket_Package_SPEC.GetTicketById", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_ticketId", ticketId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Ticket>("ticket_package.GetTicketById", p, commandType: CommandType.StoredProcedure);
+            return result.FirstOrDefault();
+        }
+
+        public List<Ticket> GetTicketsByUserId(decimal userId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_userId", userId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Ticket>("ticket_package.GetTicketsByUserId", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
+        public List<Ticket> GetTicketsByEventId(decimal eventId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_eventId", eventId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Ticket>("ticket_package.GetTicketsByEventId", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
+        public Ticket GetTicketsByUserIdAndEventId(decimal userId, decimal eventId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_userId", userId, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_eventId", eventId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Query<Ticket>("ticket_package.GetTicketsByUserIdAndEventId", p, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
 
         public void CreateTicket(Ticket ticketData)
         {
             var p = new DynamicParameters();
-            p.Add("EVENTID", ticketData.Eventid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("USERID", ticketData.Userid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("PRICE", ticketData.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Ticket_Package_SPEC.CreateTicket", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_userId", ticketData.Userid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_eventId", ticketData.Eventid, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("ticket_package.CreateTicket", p, commandType: CommandType.StoredProcedure);
         }
 
         public void UpdateTicket(Ticket ticketData)
         {
             var p = new DynamicParameters();
-            p.Add("ID", ticketData.Ticketid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("EVENTID", ticketData.Eventid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("USERID", ticketData.Userid, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            p.Add("PRICE", ticketData.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Ticket_Package_SPEC.UpdateTicket", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_ticketId", ticketData.Ticketid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_userId", ticketData.Userid, DbType.Int32, ParameterDirection.Input);
+            p.Add("p_eventId", ticketData.Eventid, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("ticket_package.UpdateTicket", p, commandType: CommandType.StoredProcedure);
         }
 
-        public void DeleteTicket(decimal id)
+        public void DeleteTicket(decimal ticketId)
         {
             var p = new DynamicParameters();
-            p.Add("ID", id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            var result = dbContext.Connection.Execute("Ticket_Package_SPEC.DeleteTicket", p, commandType: CommandType.StoredProcedure);
+            p.Add("p_ticketId", ticketId, DbType.Int32, ParameterDirection.Input);
+            var result = dbContext.Connection.Execute("ticket_package.DeleteTicket", p, commandType: CommandType.StoredProcedure);
         }
     }
 }

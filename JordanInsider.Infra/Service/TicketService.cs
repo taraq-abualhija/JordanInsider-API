@@ -1,46 +1,57 @@
 ﻿using JordanInsider.Core.Models;
 using JordanInsider.Core.Repository;
-using JordanInsider.Core.Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace JordanInsider.Infra.Service
+namespace JordanInsider.Core.Services
 {
     public class TicketService : ITicketService
     {
-        private readonly ITicketRepository _ticketRepository;
+        private readonly ITicketRepository ticketRepository;
 
-        public TicketService(ITicketRepository ticketRepository)
+        public TicketService(ITicketRepository _ticketRepository)
         {
-            _ticketRepository = ticketRepository;
+            this.ticketRepository = _ticketRepository;
         }
 
         public List<Ticket> GetAllTickets()
         {
-            return _ticketRepository.GetAllTickets();
+            return ticketRepository.GetAllTickets();
         }
 
-        public Ticket GetTicketById(decimal id)
+        public Ticket GetTicketById(decimal ticketId)
         {
-            return _ticketRepository.GetTicketById(id);
+            return ticketRepository.GetTicketById(ticketId);
+        }
+
+        public List<Ticket> GetTicketsByUserId(decimal userId)
+        {
+            return ticketRepository.GetTicketsByUserId(userId);
+        }
+
+        public List<Ticket> GetTicketsByEventId(decimal eventId)
+        {
+            return ticketRepository.GetTicketsByEventId(eventId);
+        }
+
+        public Ticket GetTicketsByUserIdAndEventId(decimal userId, decimal eventId)
+        {
+            return ticketRepository.GetTicketsByUserIdAndEventId(userId, eventId);
         }
 
         public void CreateTicket(Ticket ticketData)
         {
-            _ticketRepository.CreateTicket(ticketData);
+            ticketRepository.CreateTicket(ticketData);
         }
 
         public void UpdateTicket(Ticket ticketData)
         {
-            _ticketRepository.UpdateTicket(ticketData);
+            ticketRepository.UpdateTicket(ticketData);
         }
 
-        public void DeleteTicket(decimal id)
+        public void DeleteTicket(decimal ticketId)
         {
-            _ticketRepository.DeleteTicket(id);
+            ticketRepository.DeleteTicket(ticketId);
         }
     }
 }

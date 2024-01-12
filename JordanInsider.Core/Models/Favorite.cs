@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace JordanInsider.Core.Models
 {
-    public partial class Ticket
+    public partial class Favorite
     {
-        public decimal Ticketid { get; set; }
-        public decimal? Eventid { get; set; }
+        public decimal Favoriteid { get; set; }
         public decimal? Userid { get; set; }
+        public decimal? Touristsiteid { get; set; }
     }
 }

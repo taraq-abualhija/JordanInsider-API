@@ -1,18 +1,17 @@
 ﻿using JordanInsider.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace JordanInsider.Core.Service
+namespace JordanInsider.Core.Services
 {
     public interface ITicketService
     {
         List<Ticket> GetAllTickets();
-        Ticket GetTicketById(decimal id);
+        Ticket GetTicketById(decimal ticketId);
+        List<Ticket> GetTicketsByUserId(decimal userId);
+        List<Ticket> GetTicketsByEventId(decimal eventId);
+        Ticket GetTicketsByUserIdAndEventId(decimal userId, decimal eventId);
         void CreateTicket(Ticket ticketData);
         void UpdateTicket(Ticket ticketData);
-        void DeleteTicket(decimal id);
+        void DeleteTicket(decimal ticketId);
     }
 }

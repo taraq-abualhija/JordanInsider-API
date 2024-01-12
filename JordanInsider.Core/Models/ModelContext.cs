@@ -24,6 +24,7 @@ namespace JordanInsider.Core.Models
         public virtual DbSet<Touristsite> Touristsites { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Userevent> Userevents { get; set; } = null!;
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -175,9 +176,7 @@ namespace JordanInsider.Core.Models
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("EVENTID");
 
-                entity.Property(e => e.Price)
-                    .HasColumnType("NUMBER")
-                    .HasColumnName("PRICE");
+          
 
                 entity.Property(e => e.Ticketid)
                     .HasColumnType("NUMBER(38)")
@@ -310,6 +309,24 @@ namespace JordanInsider.Core.Models
                     .HasColumnType("NUMBER(38)")
                     .ValueGeneratedOnAdd()
                     .HasColumnName("USEREVENTID");
+
+                entity.Property(e => e.Userid)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("USERID");
+            });
+
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.ToTable("FAVORITE");
+
+                entity.Property(e => e.Favoriteid)
+                    .HasColumnType("NUMBER(38)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("FAVORITEID");
+
+                entity.Property(e => e.Touristsiteid)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("TOURISTSITEID");
 
                 entity.Property(e => e.Userid)
                     .HasColumnType("NUMBER(38)")
